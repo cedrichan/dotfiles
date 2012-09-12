@@ -22,8 +22,6 @@ export RCSINIT=-zLT
 #export PRINTER=volks
 #export LPDEST=$PRINTER
 
-export TERM=xterm-color
-
 umask 022
 
 # useful bash settings
