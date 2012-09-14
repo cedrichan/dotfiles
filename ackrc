@@ -1,1 +1,4 @@
---type-set coffee=.coffee,handlebars=.hbs
+--type-set
+coffee=.coffee
+--type-set
+handlebars=.hbs
