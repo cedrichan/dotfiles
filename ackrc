@@ -2,3 +2,7 @@
 coffee=.coffee
 --type-set
 handlebars=.hbs
+--type-set
+sass==.scss
+--group
+--color
