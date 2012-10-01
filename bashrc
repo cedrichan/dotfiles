@@ -37,10 +37,11 @@ alias la='ls -a'
 alias lf='ls -FA'
 alias ll='ls -lA'
 alias vi='vim'
+alias less='less -R'
+alias grep='egrep'
 
 
 # fancy prompt
-
     _setup_prompt() {
 	local pwd=${PWD/#$HOME/~}  # change /home/cedrich to ~
 
