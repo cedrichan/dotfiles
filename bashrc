@@ -2,9 +2,9 @@
 # .bashrc - bash(1) initialization for interactive non-login shells
 #
 
-export PATH=$HOME/local/bin:$HOME/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/ccs/bin:/usr/X11R6/bin
+export PATH=$HOME/local/bin:$HOME/bin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/ccs/bin:/usr/X11R6/bin
 #export PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
-export MANPATH=$HOME/local/man/man1:/opt/local/man:/opt/local/share/man:/usr/local/man:/usr/local/share/man:/usr/share/man
+export MANPATH=$HOME/local/man/man1:/opt/local/man:/opt/local/share/man:/usr/local/opt/coreutils/libexec/gnuman:/usr/local/man:/usr/local/share/man:/usr/share/man
 export LD_LIBRARY_PATH=$HOME/local/lib:/usr/X11R6/lib:/usr/local/lib:/usr/lib
 
 export JAVA_HOME=$HOME/install/jdk
