@@ -6,5 +6,11 @@ handlebars=.hbs
 sass=.scss
 --type-set
 json=.json
+--ignore-dir
+.idea
+--ignore-dir
+.project
+--ignore-dir
+.metadata
 --group
 --color
