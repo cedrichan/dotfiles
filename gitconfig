@@ -14,3 +14,5 @@
   ci = commit
   co = checkout
   dif = diff
+[include]
+  path = ~/.gitconfig_local
