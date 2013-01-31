@@ -4,5 +4,7 @@ coffee=.coffee
 handlebars=.hbs
 --type-set
 sass=.scss
+--type-set
+json=.json
 --group
 --color
