@@ -3,6 +3,8 @@ coffee=.coffee
 --type-set
 handlebars=.hbs
 --type-set
+dust=.dust
+--type-set
 sass=.scss
 --type-set
 json=.json
