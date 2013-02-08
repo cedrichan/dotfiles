@@ -77,3 +77,9 @@ fi
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
+
+# Load nvm if found in usual dir
+if [ -f ~/local/nvm/nvm.sh ]; then
+    . ~/local/nvm/nvm.sh
+fi
+
