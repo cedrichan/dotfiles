@@ -14,5 +14,9 @@ json=.json
 .project
 --ignore-dir
 .metadata
+--ignore-dir
+node_modules
+--ignore-dir
+vendor
 --group
 --color
