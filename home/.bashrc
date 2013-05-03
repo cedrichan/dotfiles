@@ -82,6 +82,9 @@ fi
 if [ -f ~/local/nvm/nvm.sh ]; then
     . ~/local/nvm/nvm.sh
 fi
+if [ -f ~/.rvm/scripts/rvm ]; then
+    . ~/.rvm/scripts/rvm
+fi
 if [ -f ~/local/etc/git-completion.bash ]; then
     . ~/local/etc/git-completion.bash
 fi
