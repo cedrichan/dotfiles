@@ -1,4 +1,0 @@
-gem: --both --rdoc --ri --no-force --no-test --install-dir ~/local/rubygems
-gempath:
-  - ~/local/rubygems
-  - /Library/Ruby/Gems
