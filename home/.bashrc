@@ -86,6 +86,9 @@ fi
 if [ -f ~/local/nvm/nvm.sh ]; then
     . ~/local/nvm/nvm.sh
 fi
+if [ -f ~/.nvm/nvm.sh ]; then
+    . ~/.nvm/nvm.sh
+fi
 if [ -f ~/.rvm/scripts/rvm ]; then
     . ~/.rvm/scripts/rvm
 fi
