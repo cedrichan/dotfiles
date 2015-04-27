@@ -8,6 +8,8 @@ dust=.dust
 sass=.scss
 --type-set
 json=.json
+--type-add
+virgil=.vgl
 --ignore-dir
 .idea
 --ignore-dir
@@ -17,6 +19,12 @@ json=.json
 --ignore-dir
 node_modules
 --ignore-dir
+bower_components
+--ignore-dir
 vendor
+--ignore-dir
+build
+--ignore-dir
+artifacts
 --group
 --color

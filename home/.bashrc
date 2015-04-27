@@ -71,6 +71,9 @@ shopt -s checkwinsize
 if [ -f /opt/local/etc/bash_completion ]; then
     . /opt/local/etc/bash_completion
 fi
+if [ -f /usr/local/etc/bash_completion ]; then
+    . /usr/local/etc/bash_completion
+fi
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
@@ -88,3 +91,6 @@ fi
 if [ -f ~/local/etc/git-completion.bash ]; then
     . ~/local/etc/git-completion.bash
 fi
+ 
+#if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+
