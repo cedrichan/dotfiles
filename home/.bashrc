@@ -77,6 +77,10 @@ fi
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
+if [ -f /usr/local/etc/bash_completion ]; then
+    . /usr/local/etc/bash_completion
+fi
+
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
@@ -84,6 +88,9 @@ fi
 # Load nvm if found in usual dir
 if [ -f ~/local/nvm/nvm.sh ]; then
     . ~/local/nvm/nvm.sh
+fi
+if [ -f ~/.nvm/nvm.sh ]; then
+    . ~/.nvm/nvm.sh
 fi
 if [ -f ~/.rvm/scripts/rvm ]; then
     . ~/.rvm/scripts/rvm
