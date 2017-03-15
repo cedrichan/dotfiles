@@ -10,6 +10,10 @@ sass=.scss
 json=.json
 --type-add
 virgil=.vgl
+--type-add
+typescript=.ts
+--type-add
+tsx=.tsx
 --ignore-dir
 .idea
 --ignore-dir

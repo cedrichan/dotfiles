@@ -77,6 +77,9 @@ fi
 if [ -f /usr/local/etc/bash_completion ]; then
     . /usr/local/etc/bash_completion
 fi
+if [ -f $HOME/.brew/etc/bash_completion ]; then
+    . $HOME/.brew//etc/bash_completion
+fi
 
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
@@ -98,3 +101,5 @@ fi
  
 #if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
+
+export PATH="$HOME/.yarn/bin:$PATH"
