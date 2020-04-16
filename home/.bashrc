@@ -42,24 +42,23 @@ alias grep='egrep'
 
 
 # fancy prompt
-    _setup_prompt() {
-	local pwd=${PWD/#$HOME/~}  # change /home/cedrich to ~
+_setup_prompt() {
+    local pwd=${PWD/#$HOME/~}  # change /home/cedrich to ~
+    local reset='\[\033[0m\]'
+    local green='\[\033[0;32m\]'
+    local brown='\[\033[0;33m\]'
+    local blue='\[\033[1;34m\]'
+    local magenta='\[\033[1;35m\]'
 
-        local reset='\[\033[0m\]'
-        local green='\[\033[0;32m\]'
-        local brown='\[\033[0;33m\]'
-        local blue='\[\033[1;34m\]'
-        local magenta='\[\033[1;35m\]'
+	  let n=$COLUMNS-${#pwd}-50
+	  if (( $n > 0 )); then
+	      local w=$pwd
+    else
+	      local w="...${pwd:3-n}"
+    fi
 
-	let n=$COLUMNS-${#pwd}-50
-	if (( $n > 0 )); then
-	    local w=$pwd
-        else
-	    local w="...${pwd:3-n}"
-        fi
-
-	export PS1="$blue[$reset\\u@\\h:$green$w$blue]\$$reset "
-    }
+    export PS1="$brown[$reset\D{%T}$brown]$blue[$reset\\u@\\h:$green$w$blue]\$$reset "
+}
 
 PROMPT_COMMAND=_setup_prompt
 #unset _setup_prompt
@@ -77,8 +76,8 @@ fi
 if [ -f /usr/local/etc/bash_completion ]; then
     . /usr/local/etc/bash_completion
 fi
-if [ -f $HOME/.brew/etc/bash_completion ]; then
-    . $HOME/.brew//etc/bash_completion
+if [ -f $HOME/.brew/share/bash-completion/bash_completion ]; then
+    . $HOME/.brew//share/bash-completion/bash_completion
 fi
 
 if [ -f ~/.bash_local ]; then
@@ -98,8 +97,3 @@ fi
 if [ -f ~/local/etc/git-completion.bash ]; then
     . ~/local/etc/git-completion.bash
 fi
- 
-#if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-
-
-export PATH="$HOME/.yarn/bin:$PATH"
