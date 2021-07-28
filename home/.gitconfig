@@ -14,6 +14,7 @@
   ci = commit
   co = checkout
   dif = diff
+  cp = cherry-pick
 [include]
   path = ~/.gitconfig_local
 [push]

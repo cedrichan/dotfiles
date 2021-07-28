@@ -2,12 +2,17 @@
 # .bashrc - bash(1) initialization for interactive non-login shells
 #
 
-export PATH=$HOME/local/bin:$HOME/local/rubygems/bin:$HOME/bin:$HOME/.brew/bin:$HOME/local/opt/coreutils/libexec/gnubin:/opt/local/libexec/gnubin:/opt/local/bin:/opt/local/sbin:/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/ccs/bin:/usr/X11R6/bin
-#export PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin
+# PATH
+PATH=/usr/local/bin:/usr/local/sbin:/bin:/sbin:/usr/bin:/usr/sbin:$PATH
+PATH=/opt/homebrew/bin:$HOME/.brew/bin:$PATH
+PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
+PATH=/opt/homebrew/opt/findutils/libexec/gnubin:$PATH
+PATH=$HOME/local/bin:$HOME/bin:$PATH
+export PATH
+
 export MANPATH=$HOME/local/man/man1:$HOME/local/opt/coreutils/libexec/gnuman:/opt/local/man:/opt/local/share/man:/usr/local/opt/coreutils/libexec/gnuman:/usr/local/man:/usr/local/share/man:/usr/share/man
 export LD_LIBRARY_PATH=$HOME/local/lib:/usr/X11R6/lib:/usr/local/lib:/usr/lib
 
-export JAVA_HOME=$HOME/install/jdk
 # pick your favorite editor
 export EDITOR=vim
 
@@ -16,11 +21,6 @@ export PAGER=less
 
 # other useful settings
 export BLOCKSIZE=1k
-export RCSINIT=-zLT
-
-# pick the printer nearest you
-#export PRINTER=volks
-#export LPDEST=$PRINTER
 
 umask 022
 
@@ -43,7 +43,7 @@ alias grep='egrep'
 
 # fancy prompt
 _setup_prompt() {
-    local pwd=${PWD/#$HOME/~}  # change /home/cedrich to ~
+    local pwd=${PWD/$HOME/\~}  # change /home/cedrich to ~
     local reset='\[\033[0m\]'
     local green='\[\033[0;32m\]'
     local brown='\[\033[0;33m\]'
@@ -61,12 +61,12 @@ _setup_prompt() {
 }
 
 PROMPT_COMMAND=_setup_prompt
-#unset _setup_prompt
 
 
 # Check terminal size
 shopt -s checkwinsize
 
+# Bash completions
 if [ -f /opt/local/etc/bash_completion ]; then
     . /opt/local/etc/bash_completion
 fi
@@ -79,21 +79,15 @@ fi
 if [ -f $HOME/.brew/share/bash-completion/bash_completion ]; then
     . $HOME/.brew//share/bash-completion/bash_completion
 fi
+[[ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]] && . "/opt/homebrew/etc/profile.d/bash_completion.sh"
 
+# Git completion
+if [ -f ~/local/etc/git-completion.bash ]; then
+    . ~/local/etc/git-completion.bash
+fi
+
+# Local overrides
 if [ -f ~/.bash_local ]; then
     . ~/.bash_local
 fi
 
-# Load nvm if found in usual dir
-if [ -f ~/local/nvm/nvm.sh ]; then
-    . ~/local/nvm/nvm.sh
-fi
-if [ -f ~/.nvm/nvm.sh ]; then
-    . ~/.nvm/nvm.sh
-fi
-if [ -f ~/.rvm/scripts/rvm ]; then
-    . ~/.rvm/scripts/rvm
-fi
-if [ -f ~/local/etc/git-completion.bash ]; then
-    . ~/local/etc/git-completion.bash
-fi
