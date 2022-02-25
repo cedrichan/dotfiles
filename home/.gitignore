@@ -3,5 +3,8 @@
 *.sublime-*
 .idea
 .DS_Store
+.vscode
+Thumbs.db
+.envrc
 
 *.map
