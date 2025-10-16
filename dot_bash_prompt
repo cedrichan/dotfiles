@@ -1,0 +1,75 @@
+# ─── Catppuccin Mocha Colors ─────────────────────────────
+RESET="\[\e[0m\]"
+BOLD="\[\e[1m\]"
+
+TEXT="\[\e[38;5;252m\]"
+SUBTEXT0="\[\e[38;5;244m\]"
+OVERLAY1="\[\e[38;5;239m\]"
+LAVENDER="\[\e[38;5;147m\]"
+BLUE="\[\e[38;5;110m\]"
+TEAL="\[\e[38;5;73m\]"
+GREEN="\[\e[38;5;108m\]"
+YELLOW="\[\e[38;5;179m\]"
+RED="\[\e[38;5;203m\]"
+MAUVE="\[\e[38;5;176m\]"
+
+# ─── Git Info ───────────────────────────────────────────
+git_prompt_info() {
+  local branch
+  branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" || return 0
+  [ -z "$branch" ] && return 0
+  if [ -z "$(git status --porcelain 2>/dev/null)" ]; then
+    printf "${OVERLAY1}|${GREEN}%s${RESET}" "$branch"
+  else
+    printf "${OVERLAY1}|${RED}%s✗${RESET}" "$branch"
+  fi
+}
+
+# ─── Repo-relative Path + Middle Ellipsis ───────────────
+shorten_path() {
+  local path max_len=45
+  if toplevel="$(git rev-parse --show-toplevel 2>/dev/null)"; then
+    local repo="${toplevel##*/}"
+    local prefix; prefix="$(git rev-parse --show-prefix 2>/dev/null)"
+    if [ -z "$prefix" ]; then
+      path="$repo"
+    else
+      path="$repo/${prefix%/}"
+    fi
+  else
+    path="${PWD/#$HOME/~}"
+  fi
+
+  [ ${#path} -le $max_len ] && { echo "$path"; return; }
+
+  local IFS="/"; local parts=($path); local n=${#parts[@]}
+  [ $n -le 3 ] && { echo "$path"; return; }
+
+  local keep_head=2 keep_tail=2 out=""
+  for ((i=0;i<keep_head;i++)); do out+="${parts[$i]}/"; done
+  out+="…/"
+  for ((i=n-keep_tail;i<n;i++)); do
+    out+="${parts[$i]}"
+    [ $i -lt $((n-1)) ] && out+="/"
+  done
+  echo "$out"
+}
+
+# ─── Build the Prompt ───────────────────────────────────
+set_bash_prompt() {
+  local ret=$?
+  local status
+  if [ $ret -eq 0 ]; then
+    status="${GREEN}✔${RESET}"
+  else
+    status="${RED}✘(${ret})${RESET}"
+  fi
+
+  local shortpath; shortpath="$(shorten_path)"
+
+  PS1="\n${MAUVE}╭─${RESET}\
+${LAVENDER}\t${OVERLAY1}|${TEAL}\u${OVERLAY1}@${BLUE}\h${OVERLAY1}|${YELLOW}${shortpath}${RESET}$(git_prompt_info)\
+\n${MAUVE}╰─${RESET}${status}${RESET}\$ "
+}
+
+PROMPT_COMMAND=set_bash_prompt
