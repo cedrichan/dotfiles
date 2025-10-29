@@ -3,7 +3,6 @@ RESET="\[\e[0m\]"
 BOLD="\[\e[1m\]"
 
 TEXT="\[\e[38;5;252m\]"
-SUBTEXT0="\[\e[38;5;244m\]"
 OVERLAY1="\[\e[38;5;239m\]"
 LAVENDER="\[\e[38;5;147m\]"
 BLUE="\[\e[38;5;110m\]"
@@ -13,11 +12,27 @@ YELLOW="\[\e[38;5;179m\]"
 RED="\[\e[38;5;203m\]"
 MAUVE="\[\e[38;5;176m\]"
 
-# ─── Git Info ───────────────────────────────────────────
+# ─── Utility: shorten string ─────────────────────────────
+shorten_str() {
+  local str="$1" max_len="$2"
+  if [ ${#str} -le "$max_len" ]; then
+    echo "$str"
+  else
+    local keep=$(( (max_len - 1) / 2 ))
+    echo "${str:0:$keep}…${str: -$keep}"
+  fi
+}
+
+# ─── Git info (auto-shorten branch) ──────────────────────
 git_prompt_info() {
   local branch
   branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" || return 0
   [ -z "$branch" ] && return 0
+
+  local term_width=$(tput cols 2>/dev/null || echo 80)
+  local max_branch_len=$((term_width * 60 / 100))   # ← 60 % of width
+  branch="$(shorten_str "$branch" "$max_branch_len")"
+
   if [ -z "$(git status --porcelain 2>/dev/null)" ]; then
     printf "${OVERLAY1}|${GREEN}%s${RESET}" "$branch"
   else
@@ -25,7 +40,7 @@ git_prompt_info() {
   fi
 }
 
-# ─── Repo-relative Path + Middle Ellipsis ───────────────
+# ─── Repo-relative path with ellipsis ────────────────────
 shorten_path() {
   local path max_len=45
   if toplevel="$(git rev-parse --show-toplevel 2>/dev/null)"; then
@@ -55,16 +70,10 @@ shorten_path() {
   echo "$out"
 }
 
-# ─── Build the Prompt ───────────────────────────────────
+# ─── Build prompt ────────────────────────────────────────
 set_bash_prompt() {
   local ret=$?
-  local status
-  if [ $ret -eq 0 ]; then
-    status="${GREEN}✔${RESET}"
-  else
-    status="${RED}✘(${ret})${RESET}"
-  fi
-
+  local status; [ $ret -eq 0 ] && status="${GREEN}✔${RESET}" || status="${RED}✘(${ret})${RESET}"
   local shortpath; shortpath="$(shorten_path)"
 
   PS1="\n${MAUVE}╭─${RESET}\
