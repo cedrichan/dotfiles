@@ -8,6 +8,7 @@ PATH=/opt/homebrew/bin:$HOME/.brew/bin:$PATH
 PATH=/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH
 PATH=/opt/homebrew/opt/findutils/libexec/gnubin:$PATH
 PATH=$HOME/local/bin:$HOME/bin:$PATH
+PATH=$HOME/.local/bin:$HOME/.bin:$PATH
 export PATH
 
 export MANPATH=$HOME/local/man/man1:$HOME/local/opt/coreutils/libexec/gnuman:/opt/local/man:/opt/local/share/man:/usr/local/opt/coreutils/libexec/gnuman:/usr/local/man:/usr/local/share/man:/usr/share/man
@@ -80,5 +81,3 @@ if [ -f ~/.bash_local ]; then
 fi
 
 
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/cedrichan/.cache/lm-studio/bin"
