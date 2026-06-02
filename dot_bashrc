@@ -42,8 +42,8 @@ alias grep='egrep'
 
 
 # fancy prompt
-if [ -f .bash_prompt ]; then
-    source .bash_prompt
+if [ -f ~/.bash_prompt ]; then
+    source ~/.bash_prompt
 fi
 
 # Check terminal size
