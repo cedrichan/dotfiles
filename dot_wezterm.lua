@@ -19,5 +19,11 @@ config.colors = {
 }
 config.window_background_opacity = 0.9
 
+-- Alt+Left/Right: move word by word (like Terminal.app on macOS)
+config.keys = {
+  { key = 'LeftArrow',  mods = 'OPT', action = wezterm.action.SendString '\x1bb' },
+  { key = 'RightArrow', mods = 'OPT', action = wezterm.action.SendString '\x1bf' },
+}
+
 -- Finally, return the configuration to wezterm:
 return config
