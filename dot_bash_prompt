@@ -1,9 +1,6 @@
 # ─── Catppuccin Mocha Colors ─────────────────────────────
 RESET="\[\e[0m\]"
-BOLD="\[\e[1m\]"
 
-TEXT="\[\e[38;5;252m\]"
-OVERLAY1="\[\e[38;5;239m\]"
 LAVENDER="\[\e[38;5;147m\]"
 BLUE="\[\e[38;5;110m\]"
 TEAL="\[\e[38;5;73m\]"
@@ -11,6 +8,7 @@ GREEN="\[\e[38;5;108m\]"
 YELLOW="\[\e[38;5;179m\]"
 RED="\[\e[38;5;203m\]"
 MAUVE="\[\e[38;5;176m\]"
+OVERLAY1="\[\e[38;5;239m\]"
 
 # ─── Utility: shorten string ─────────────────────────────
 shorten_str() {
@@ -23,47 +21,42 @@ shorten_str() {
   fi
 }
 
-# ─── Git info (auto-shorten branch) ──────────────────────
+# ─── Git branch + dirty state ────────────────────────────
 git_prompt_info() {
   local branch
   branch="$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" || return 0
   [ -z "$branch" ] && return 0
 
-  local term_width=$(tput cols 2>/dev/null || echo 80)
-  local max_branch_len=$((term_width * 60 / 100))   # ← 60 % of width
+  local max_branch_len=$(( $(tput cols 2>/dev/null || echo 80) * 60 / 100 ))
   branch="$(shorten_str "$branch" "$max_branch_len")"
 
   if [ -z "$(git status --porcelain 2>/dev/null)" ]; then
-    printf "${OVERLAY1}|${GREEN}%s${RESET}" "$branch"
+    printf " ${GREEN}⎇ %s${RESET}" "$branch"
   else
-    printf "${OVERLAY1}|${RED}%s✗${RESET}" "$branch"
+    printf " ${RED}⎇ %s ✗${RESET}" "$branch"
   fi
 }
 
-# ─── Repo-relative path with ellipsis ────────────────────
+# ─── Repo-relative path ──────────────────────────────────
 shorten_path() {
   local path max_len=45
   if toplevel="$(git rev-parse --show-toplevel 2>/dev/null)"; then
     local repo="${toplevel##*/}"
     local prefix; prefix="$(git rev-parse --show-prefix 2>/dev/null)"
-    if [ -z "$prefix" ]; then
-      path="$repo"
-    else
-      path="$repo/${prefix%/}"
-    fi
+    path="${repo}${prefix:+/${prefix%/}}"
   else
     path="${PWD/#$HOME/~}"
   fi
 
   [ ${#path} -le $max_len ] && { echo "$path"; return; }
 
-  local IFS="/"; local parts=($path); local n=${#parts[@]}
+  local IFS="/" parts=($path) n=${#parts[@]}
   [ $n -le 3 ] && { echo "$path"; return; }
 
-  local keep_head=2 keep_tail=2 out=""
-  for ((i=0;i<keep_head;i++)); do out+="${parts[$i]}/"; done
+  local out=""
+  for ((i=0; i<2; i++)); do out+="${parts[$i]}/"; done
   out+="…/"
-  for ((i=n-keep_tail;i<n;i++)); do
+  for ((i=n-2; i<n; i++)); do
     out+="${parts[$i]}"
     [ $i -lt $((n-1)) ] && out+="/"
   done
@@ -73,12 +66,17 @@ shorten_path() {
 # ─── Build prompt ────────────────────────────────────────
 set_bash_prompt() {
   local ret=$?
-  local status; [ $ret -eq 0 ] && status="${GREEN}✔${RESET}" || status="${RED}✘(${ret})${RESET}"
   local shortpath; shortpath="$(shorten_path)"
 
-  PS1="\n${MAUVE}╭─${RESET}\
-${LAVENDER}\t${OVERLAY1}|${TEAL}\u${OVERLAY1}@${BLUE}\h${OVERLAY1}|${YELLOW}${shortpath}${RESET}$(git_prompt_info)\
-\n${MAUVE}╰─${RESET}${status}${RESET}\$ "
+  local prompt_char
+  if [ $ret -eq 0 ]; then
+    prompt_char="${MAUVE}❯${RESET}"
+  else
+    prompt_char="${RED}✘ ${ret} ❯${RESET}"
+  fi
+
+  PS1="\n${OVERLAY1}[${LAVENDER}\t${OVERLAY1}]${RESET} ${TEAL}\u${OVERLAY1}@${BLUE}\h${RESET} ${YELLOW}${shortpath}${RESET}$(git_prompt_info)\n${prompt_char} "
 }
 
 PROMPT_COMMAND=set_bash_prompt
+
