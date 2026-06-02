@@ -1,29 +1,30 @@
--- Pull in the wezterm API
 local wezterm = require 'wezterm'
 
--- This will hold the configuration.
 local config = wezterm.config_builder()
 
--- This is where you actually apply your config choices.
-
--- For example, changing the initial geometry for new windows:
+-- Window
 config.initial_cols = 160
 config.initial_rows = 64
 config.enable_scroll_bar = true
+config.hide_tab_bar_if_only_one_tab = true
 
--- or, changing the font size and color scheme.
+-- Appearance
 config.font_size = 13
--- config.color_scheme = 'Catppuccin Frappe'
 config.colors = {
   background = 'black'
 }
 config.window_background_opacity = 0.9
+config.macos_window_background_blur = 20      -- frosted-glass blur behind transparent window
 
--- Alt+Left/Right: move word by word (like Terminal.app on macOS)
-config.keys = {
-  { key = 'LeftArrow',  mods = 'OPT', action = wezterm.action.SendString '\x1bb' },
-  { key = 'RightArrow', mods = 'OPT', action = wezterm.action.SendString '\x1bf' },
-}
+-- Behavior
+config.audible_bell = 'Disabled'
+-- Key bindings
+-- On macOS, Alt+Left/Right moves word by word (matching Terminal.app behavior)
+if wezterm.target_triple:find('apple') then
+  config.keys = {
+    { key = 'LeftArrow',  mods = 'OPT', action = wezterm.action.SendString '\x1bb' },
+    { key = 'RightArrow', mods = 'OPT', action = wezterm.action.SendString '\x1bf' },
+  }
+end
 
--- Finally, return the configuration to wezterm:
 return config
