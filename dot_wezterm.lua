@@ -10,14 +10,19 @@ config.hide_tab_bar_if_only_one_tab = true
 
 -- Appearance
 config.font_size = 13
+if wezterm.target_triple:find('linux') then
+  config.font_size = 10
+end
 config.colors = {
   background = 'black'
 }
 config.window_background_opacity = 0.9
+config.window_padding = { left = 4, right = 4, top = 4, bottom = 4 }
 config.macos_window_background_blur = 20      -- frosted-glass blur behind transparent window
 
 -- Behavior
 config.audible_bell = 'Disabled'
+config.scrollback_lines = 10000
 -- Key bindings
 -- On macOS, Alt+Left/Right moves word by word (matching Terminal.app behavior)
 if wezterm.target_triple:find('apple') then
