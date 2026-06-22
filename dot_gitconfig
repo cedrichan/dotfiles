@@ -27,4 +27,4 @@
 	process = git-lfs filter-process
 	required = true
 [gpg "ssh"]
-	allowedSignersFile = /Users/cedrichan/.ssh/allowed_signers
+	allowedSignersFile = ~/.ssh/allowed_signers
