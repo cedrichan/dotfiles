@@ -14,7 +14,28 @@ if wezterm.target_triple:find('linux') then
   config.font_size = 10
 end
 config.colors = {
-  background = 'black'
+  background = 'black',
+  foreground = '#e6e6e6',
+  ansi = {
+    '#5c6370', -- black
+    '#ff6b6b', -- red
+    '#98c379', -- green
+    '#e5c07b', -- yellow
+    '#61afef', -- blue
+    '#c678dd', -- magenta
+    '#56b6c2', -- cyan
+    '#dcdfe4', -- white
+  },
+  brights = {
+    '#7f8792', -- bright black
+    '#ff8787', -- bright red
+    '#b1e19b', -- bright green
+    '#f0d199', -- bright yellow
+    '#7fc1ff', -- bright blue
+    '#d8a4e8', -- bright magenta
+    '#7ed4e0', -- bright cyan
+    '#ffffff', -- bright white
+  },
 }
 config.window_background_opacity = 0.9
 config.window_padding = { left = 4, right = 4, top = 4, bottom = 4 }
