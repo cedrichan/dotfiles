@@ -39,7 +39,7 @@ alias ll='ls -lA'
 alias vi='vim'
 alias less='less -R'
 alias grep='egrep'
-
+alias glow='glow -w$COLUMNS -p'
 
 # fancy prompt
 if [ -f ~/.bash_prompt ]; then
