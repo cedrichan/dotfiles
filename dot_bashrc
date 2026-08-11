@@ -46,6 +46,15 @@ if [ -f ~/.bash_prompt ]; then
     source ~/.bash_prompt
 fi
 
+# Update the static SSH agent symlink to point to the current active socket
+SSH_AUTH_SOCK_LINK="$HOME/.ssh/ssh_auth_sock"
+if [ -n "$SSH_AUTH_SOCK" ] &&
+   [ "$SSH_AUTH_SOCK" != "$SSH_AUTH_SOCK_LINK" ] &&
+   [ -S "$SSH_AUTH_SOCK" ]; then
+    ln -sf "$SSH_AUTH_SOCK" "$SSH_AUTH_SOCK_LINK"
+fi
+export SSH_AUTH_SOCK="$SSH_AUTH_SOCK_LINK"
+
 # Check terminal size
 shopt -s checkwinsize
 
